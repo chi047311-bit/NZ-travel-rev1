@@ -8,7 +8,6 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    /* 1. 整體佈局：垂直欄位排列 (Column) */
     body { 
       display: flex; 
       flex-direction: column; 
@@ -17,7 +16,7 @@
       background-color: #f4f6f8; 
     }
     
-    /* 2. 上半部：行程內容區 (預設寬度100%，占據剩餘高度並可滾動) */
+    /* 上半部：行程內容區 */
     #sidebar { 
       width: 100%; 
       flex: 1; 
@@ -40,75 +39,125 @@
       padding: 6px 10px; 
       gap: 6px; 
       scrollbar-width: thin; 
+      scroll-behavior: smooth;
     }
     
     .tab-btn { 
       background: rgba(255, 255, 255, 0.15); 
       color: #cbd5e1; 
       border: none; 
-      padding: 6px 12px; 
+      padding: 6px 14px; 
       border-radius: 4px; 
       cursor: pointer; 
       white-space: nowrap; 
-      font-size: 0.8rem; 
+      font-size: 0.82rem; 
       transition: all 0.2s; 
     }
-    .tab-btn.active, .tab-btn:hover { background: #38bdf8; color: #0f172a; font-weight: bold; }
+    .tab-btn.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
 
-    #spot-list { flex: 1; overflow-y: auto; padding: 12px 15px; }
+    #spot-list { flex: 1; overflow-y: auto; padding: 12px 15px; scroll-behavior: smooth; }
     
     .spot-card { 
       background: white; 
       border: 1px solid #e2e8f0; 
       border-radius: 8px; 
-      padding: 10px 12px; 
-      margin-bottom: 8px; 
+      padding: 12px; 
+      margin-bottom: 10px; 
       cursor: pointer; 
-      transition: transform 0.15s, box-shadow 0.15s; 
-      border-left: 4px solid #cbd5e1; 
+      transition: all 0.2s; 
+      border-left: 5px solid #cbd5e1; 
     }
-    .spot-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-left-color: #0284c7; }
+    .spot-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
     .spot-card.hotel { border-left-color: #10b981; background: #f0fdf4; }
     .spot-card.flight { border-left-color: #f59e0b; background: #fffbeb; }
     .spot-card.shop { border-left-color: #a855f7; background: #faf5ff; }
     
-    .spot-card h3 { font-size: 0.95rem; color: #1e293b; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
-    .spot-tag { display: inline-block; padding: 2px 6px; font-size: 0.7rem; border-radius: 4px; background: #e2e8f0; color: #475569; font-weight: 600; margin-bottom: 4px; }
-    .spot-card p { font-size: 0.82rem; color: #64748b; line-height: 1.35; }
-    .drive-info { display: inline-block; margin-top: 4px; font-size: 0.75rem; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
-
-    /* 3. 下半部：固定地圖高度 (下方固定占據 320px) */
-    #map { 
-      width: 100%; 
-      height: 320px; 
-      flex-shrink: 0; 
-      border-top: 2px solid #e2e8f0;
+    /* 點擊地圖時被選中的卡片高亮效果 */
+    .spot-card.highlight {
+      outline: 2px solid #0284c7;
+      background-color: #e0f2fe !important;
     }
 
-    /* 手機版響應式高度調整 */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .spot-tag { 
+      display: inline-block; 
+      padding: 2px 6px; 
+      font-size: 0.7rem; 
+      border-radius: 4px; 
+      background: #e2e8f0; 
+      color: #475569; 
+      font-weight: 600; 
+      margin-bottom: 4px; 
+    }
+
+    .nav-btn {
+      font-size: 0.75rem;
+      color: #0284c7;
+      background: #ffffff;
+      border: 1px solid #bae6fd;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: #e0f2fe; }
+
+    .spot-card h3 { font-size: 0.95rem; color: #1e293b; margin-bottom: 4px; }
+    .spot-card p { font-size: 0.82rem; color: #64748b; line-height: 1.4; }
+    .drive-info { display: inline-block; margin-top: 6px; font-size: 0.75rem; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+
+    /* 下半部：地圖 */
+    #map { 
+      width: 100%; 
+      height: 300px; 
+      flex-shrink: 0; 
+      border-top: 2px solid #cbd5e1;
+    }
+
+    /* 數字化地圖標記 Icon */
+    .custom-marker {
+      background: #0284c7;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 12px;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
     @media (max-width: 768px) {
-      #map {
-        height: 280px; /* 手機上適度縮小地圖高度，讓上半部行程空間最大化 */
-      }
+      #map { height: 260px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 上半部：行程內容 -->
   <div id="sidebar">
     <div class="header">
       <h1>🇳🇿 紐西蘭冬季自助全行程</h1>
-      <p>點選上方日期檢視行程與行車資訊</p>
+      <p>點選上方日期檢視行程，卡片右上角可直接發起導航</p>
     </div>
     <div id="day-tabs"></div>
     <div id="spot-list"></div>
   </div>
 
-  <!-- 下半部：地圖 -->
   <div id="map"></div>
 
-  <!-- 引入 Leaflet 地圖 JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -304,7 +353,7 @@
         }
       ];
 
-      // 初始化地圖
+      // 初始化 Leaflet 地圖
       const map = L.map('map').setView([-45.5, 169.5], 7);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -316,13 +365,27 @@
       const tabsContainer = document.getElementById('day-tabs');
       const spotListContainer = document.getElementById('spot-list');
 
+      // 取得類別對應 Icon
+      function getCategoryIcon(cat) {
+        if (cat.includes("住宿")) return "🏨";
+        if (cat.includes("航班") || cat.includes("轉機")) return "✈️";
+        if (cat.includes("購物") || cat.includes("採買")) return "🛒";
+        return "📸";
+      }
+
       function loadDay(dayIndex) {
         const dayData = itineraryData[dayIndex];
 
+        // 高亮頁籤，並自動捲動頁籤列
         document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
-          btn.classList.toggle('active', idx === dayIndex);
+          const isActive = idx === dayIndex;
+          btn.classList.toggle('active', isActive);
+          if (isActive) {
+            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
         });
 
+        // 清除地圖舊標記與路徑
         currentMarkers.forEach(m => map.removeLayer(m));
         currentMarkers = [];
         if (currentPolyline) map.removeLayer(currentPolyline);
@@ -334,10 +397,20 @@
           const latLng = [spot.lat, spot.lng];
           routeLatLngs.push(latLng);
 
-          const marker = L.marker(latLng).addTo(map)
-            .bindPopup(`<b>${spot.name}</b><br>${spot.desc}<br><span style="color:#d97706">${spot.drive}</span>`);
+          // 地圖數字 Icon 標記
+          const customIcon = L.divIcon({
+            className: 'custom-marker',
+            html: `<span>${idx + 1}</span>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+
+          const marker = L.marker(latLng, { icon: customIcon }).addTo(map)
+            .bindPopup(`<b>${idx + 1}. ${spot.name}</b><br>${spot.desc}`);
+          
           currentMarkers.push(marker);
 
+          // 建立行程卡片
           const card = document.createElement('div');
           const isHotel = spot.category.includes("住宿");
           const isFlight = spot.category.includes("航班") || spot.category.includes("轉機");
@@ -348,31 +421,50 @@
           if (isFlight) cardClass += ' flight';
           if (isShop) cardClass += ' shop';
 
+          const icon = getCategoryIcon(spot.category);
+          const navUrl = `https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`;
+
           card.className = cardClass;
+          card.id = `spot-card-${idx}`;
           card.innerHTML = `
-            <span class="spot-tag">${spot.category}</span>
-            <h3>${spot.name}</h3>
+            <div class="card-header">
+              <div>
+                <span class="spot-tag">${icon} ${spot.category}</span>
+                <h3>${idx + 1}. ${spot.name}</h3>
+              </div>
+              <a href="${navUrl}" target="_blank" rel="noopener" class="nav-btn" onclick="event.stopPropagation();">🧭 導航</a>
+            </div>
             <p>${spot.desc}</p>
             ${spot.drive ? `<div class="drive-info">🚗 ${spot.drive}</div>` : ''}
           `;
 
+          // 卡片點擊事件 (行程 ➔ 地圖)
           card.addEventListener('click', () => {
-            map.flyTo(latLng, 12, { duration: 1.2 });
+            map.flyTo(latLng, 13, { duration: 1 });
             marker.openPopup();
+          });
+
+          // 地圖點擊事件 (地圖 ➔ 行程)
+          marker.on('click', () => {
+            document.querySelectorAll('.spot-card').forEach(c => c.classList.remove('highlight'));
+            card.classList.add('highlight');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => card.classList.remove('highlight'), 2000);
           });
 
           spotListContainer.appendChild(card);
         });
 
+        // 繪製景點連線與自動適應邊界
         if (routeLatLngs.length > 1) {
           currentPolyline = L.polyline(routeLatLngs, { color: '#0284c7', weight: 3, opacity: 0.8, dashArray: '6, 8' }).addTo(map);
-          map.fitBounds(currentPolyline.getBounds(), { padding: [40, 40] });
+          map.fitBounds(currentPolyline.getBounds(), { padding: [50, 50] });
         } else if (routeLatLngs.length === 1) {
-          map.setView(routeLatLngs[0], 10);
+          map.setView(routeLatLngs[0], 11);
         }
       }
 
-      // 初始化頁籤
+      // 初始化頁籤按鈕
       itineraryData.forEach((data, index) => {
         const btn = document.createElement('button');
         btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
@@ -381,7 +473,7 @@
         tabsContainer.appendChild(btn);
       });
 
-      // 預設載入 Day 1
+      // 載入第一天行程
       loadDay(0);
     });
   </script>
