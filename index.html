@@ -27,7 +27,7 @@
       overflow: hidden;
     }
     
-    /* 一、Header 視覺強化 */
+    /* Header 視覺樣式 */
     .header { 
       padding: 12px 16px; 
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
@@ -112,7 +112,7 @@
     .weather-info { color: #0369a1; font-weight: 600; }
     .aurora-info { color: #7e22ce; font-weight: 600; }
 
-    /* 四、花費紀錄樣式 */
+    /* 花費紀錄樣式 (調整為 6 大全新欄位) */
     .expense-box {
       background: #fff;
       border: 1px solid #cbd5e1;
@@ -159,7 +159,6 @@
 
     #spot-list { flex: 1; overflow-y: auto; padding: 12px 15px; scroll-behavior: smooth; }
     
-    /* 三、Checklist 與卡片樣式 */
     .spot-card { 
       background: white; 
       border: 1px solid #e2e8f0; 
@@ -181,7 +180,6 @@
       color: #94a3b8;
     }
     
-    /* 顏色分類邊條 */
     .spot-card.hotel { border-left-color: #10b981; background: #f0fdf4; }
     .spot-card.flight { border-left-color: #ef4444; background: #fef2f2; }
     .spot-card.shop { border-left-color: #a855f7; background: #faf5ff; }
@@ -238,7 +236,6 @@
 
     #map { width: 100%; height: 25vh; flex-shrink: 0; border-top: 2px solid #cbd5e1; }
 
-    /* 二、Marker 顏色分類標籤 (地圖 Pin) */
     .custom-marker {
       color: white; border-radius: 50%; width: 24px; height: 24px;
       display: flex; align-items: center; justify-content: center;
@@ -255,7 +252,6 @@
 <body>
 
   <div id="sidebar">
-    <!-- 一、Header 呈現重組 -->
     <div class="header">
       <div class="header-top">
         <span id="header-day-badge" class="day-badge">Day 1</span>
@@ -276,19 +272,19 @@
         <span id="aurora-info" class="aurora-info">🌌 極光觀測建議載入中...</span>
       </div>
 
-      <!-- 四、每日花費紀錄模組 -->
+      <!-- 四、每日花費紀錄模組 (已修改為指定欄位) -->
       <div class="expense-box">
         <div class="expense-title">
           <span>💰 今日花費紀錄 (NZ$)</span>
           <span style="color:#0284c7;">今日計：NZ$ <span id="day-total-expense">0</span> ｜ 全行程累計：NZ$ <span id="all-total-expense">0</span></span>
         </div>
         <div class="expense-grid">
-          <div class="expense-item">⛽ 油錢<input type="number" id="exp-gas" placeholder="0" oninput="saveExpenses()"></div>
+          <div class="expense-item">🍳 早餐<input type="number" id="exp-breakfast" placeholder="0" oninput="saveExpenses()"></div>
           <div class="expense-item">🍱 午餐<input type="number" id="exp-lunch" placeholder="0" oninput="saveExpenses()"></div>
           <div class="expense-item">🍽️ 晚餐<input type="number" id="exp-dinner" placeholder="0" oninput="saveExpenses()"></div>
-          <div class="expense-item">☕ 咖啡/小吃<input type="number" id="exp-cafe" placeholder="0" oninput="saveExpenses()"></div>
-          <div class="expense-item">🅿️ 停車費<input type="number" id="exp-parking" placeholder="0" oninput="saveExpenses()"></div>
-          <div class="expense-item">🛒 門票/雜費<input type="number" id="exp-other" placeholder="0" oninput="saveExpenses()"></div>
+          <div class="expense-item">🛒 超市<input type="number" id="exp-supermarket" placeholder="0" oninput="saveExpenses()"></div>
+          <div class="expense-item">🅿️ 停車<input type="number" id="exp-parking" placeholder="0" oninput="saveExpenses()"></div>
+          <div class="expense-item">💡 其他<input type="number" id="exp-other" placeholder="0" oninput="saveExpenses()"></div>
         </div>
       </div>
 
@@ -612,7 +608,6 @@
         }
       ];
 
-      // 地圖初始化
       const map = L.map('map').setView([-45.5, 169.5], 7);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -624,13 +619,12 @@
       const tabsContainer = document.getElementById('day-tabs');
       const spotListContainer = document.getElementById('spot-list');
 
-      // 取得 Marker 顏色 Class (二、Marker 顏色分類)
       function getMarkerClass(cat) {
-        if (cat.includes("住宿")) return "marker-hotel";   /* 🟢 住宿 */
-        if (cat.includes("美食") || cat.includes("餐廳")) return "marker-food"; /* 🟠 餐廳 */
-        if (cat.includes("購物") || cat.includes("採買")) return "marker-shop"; /* 🟣 購物 */
-        if (cat.includes("航班") || cat.includes("轉機") || cat.includes("加油")) return "marker-flight"; /* 🔴 機場/加油站 */
-        return "marker-default"; /* 🔵 景點 */
+        if (cat.includes("住宿")) return "marker-hotel";
+        if (cat.includes("美食") || cat.includes("餐廳")) return "marker-food";
+        if (cat.includes("購物") || cat.includes("採買")) return "marker-shop";
+        if (cat.includes("航班") || cat.includes("轉機") || cat.includes("加油")) return "marker-flight";
+        return "marker-default";
       }
 
       function getCategoryIcon(cat) {
@@ -642,7 +636,6 @@
         return "📸";
       }
 
-      // 天氣描述對照
       function getWeatherDescription(code) {
         const weatherMap = { 0: "☀️ 晴朗", 1: "🌤️ 多雲時晴", 2: "⛅ 局部多雲", 3: "☁️ 陰天", 45: "🌫️ 有霧", 61: "☔ 小雨", 71: "🌨️ 小雪", 80: "🌧️ 陣雨" };
         return weatherMap[code] || "🌤️ 多雲";
@@ -662,12 +655,10 @@
         }
       }
 
-      // 載入天數
       function loadDay(dayIndex) {
         currentDayIdx = dayIndex;
         const dayData = itineraryData[dayIndex];
 
-        // 一、Header 切換時同步更新
         document.getElementById('header-day-badge').innerText = dayData.dayNum;
         document.getElementById('header-date').innerText = dayData.dateStr;
         document.getElementById('header-route').innerText = dayData.title;
@@ -677,7 +668,6 @@
         document.getElementById('aurora-info').innerText = dayData.aurora;
         document.getElementById('metservice-link').href = dayData.metserviceUrl;
 
-        // 載入花費金額 (LocalStorage)
         loadExpenses(dayIndex);
 
         if (dayData.spots && dayData.spots.length > 0) {
@@ -689,7 +679,6 @@
           if (idx === dayIndex) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         });
 
-        // 導航按鈕連結
         if (!dayData.isFlightDay && dayData.spots.length > 1) {
           const origin = `${dayData.spots[0].lat},${dayData.spots[0].lng}`;
           const destination = `${dayData.spots[dayData.spots.length - 1].lat},${dayData.spots[dayData.spots.length - 1].lng}`;
@@ -703,7 +692,6 @@
           document.getElementById('full-route-link').style.display = "none";
         }
 
-        // 清除舊圖層
         currentMarkers.forEach(m => map.removeLayer(m));
         currentMarkers = [];
         if (currentPolyline) map.removeLayer(currentPolyline);
@@ -715,7 +703,6 @@
           const latLng = [spot.lat, spot.lng];
           if (!dayData.isFlightDay) routeLatLngs.push(latLng);
 
-          // 二、Marker 顏色分類地圖 Pins
           const markerColorClass = getMarkerClass(spot.category);
           const customIcon = L.divIcon({
             className: `custom-marker ${markerColorClass}`,
@@ -729,7 +716,6 @@
           marker.on('mouseover', () => marker.openPopup());
           currentMarkers.push(marker);
 
-          // 三、Checklist 狀態載入 (LocalStorage)
           const isDone = localStorage.getItem(`nz_spot_done_${spot.id}`) === 'true';
 
           const card = document.createElement('div');
@@ -776,10 +762,9 @@
           spotListContainer.appendChild(card);
         });
 
-        // 二、自動 Fit Bounds 視覺效果
         if (!dayData.isFlightDay && routeLatLngs.length > 1) {
           currentPolyline = L.polyline(routeLatLngs, { color: '#0284c7', weight: 3, opacity: 0.8, dashArray: '6, 8' }).addTo(map);
-          map.fitBounds(currentPolyline.getBounds(), { padding: [30, 30] }); // 自動最佳視野適應
+          map.fitBounds(currentPolyline.getBounds(), { padding: [30, 30] });
         } else if (routeLatLngs.length === 1) {
           map.setView(routeLatLngs[0], 11);
         } else if (dayData.isFlightDay) {
@@ -789,7 +774,6 @@
         calcAllTotalExpenses();
       }
 
-      // 三、Toggle Spot Checkbox 完成度
       window.toggleSpotDone = function(spotId, event) {
         event.stopPropagation();
         const isChecked = event.target.checked;
@@ -801,19 +785,19 @@
         }
       };
 
-      // 四、花費紀錄儲存與計算機制 (LocalStorage)
+      // 儲存與計算花費 (針對 6 個新欄位：breakfast, lunch, dinner, supermarket, parking, other)
       window.saveExpenses = function() {
-        const gas = parseFloat(document.getElementById('exp-gas').value) || 0;
+        const breakfast = parseFloat(document.getElementById('exp-breakfast').value) || 0;
         const lunch = parseFloat(document.getElementById('exp-lunch').value) || 0;
         const dinner = parseFloat(document.getElementById('exp-dinner').value) || 0;
-        const cafe = parseFloat(document.getElementById('exp-cafe').value) || 0;
+        const supermarket = parseFloat(document.getElementById('exp-supermarket').value) || 0;
         const parking = parseFloat(document.getElementById('exp-parking').value) || 0;
         const other = parseFloat(document.getElementById('exp-other').value) || 0;
 
-        const dayTotal = gas + lunch + dinner + cafe + parking + other;
+        const dayTotal = breakfast + lunch + dinner + supermarket + parking + other;
         document.getElementById('day-total-expense').innerText = dayTotal.toLocaleString();
 
-        const data = { gas, lunch, dinner, cafe, parking, other, dayTotal };
+        const data = { breakfast, lunch, dinner, supermarket, parking, other, dayTotal };
         localStorage.setItem(`nz_expense_day_${currentDayIdx}`, JSON.stringify(data));
 
         calcAllTotalExpenses();
@@ -823,15 +807,15 @@
         const saved = localStorage.getItem(`nz_expense_day_${dayIndex}`);
         if (saved) {
           const data = JSON.parse(saved);
-          document.getElementById('exp-gas').value = data.gas || '';
+          document.getElementById('exp-breakfast').value = data.breakfast || '';
           document.getElementById('exp-lunch').value = data.lunch || '';
           document.getElementById('exp-dinner').value = data.dinner || '';
-          document.getElementById('exp-cafe').value = data.cafe || '';
+          document.getElementById('exp-supermarket').value = data.supermarket || '';
           document.getElementById('exp-parking').value = data.parking || '';
           document.getElementById('exp-other').value = data.other || '';
           document.getElementById('day-total-expense').innerText = (data.dayTotal || 0).toLocaleString();
         } else {
-          ['exp-gas','exp-lunch','exp-dinner','exp-cafe','exp-parking','exp-other'].forEach(id => document.getElementById(id).value = '');
+          ['exp-breakfast','exp-lunch','exp-dinner','exp-supermarket','exp-parking','exp-other'].forEach(id => document.getElementById(id).value = '');
           document.getElementById('day-total-expense').innerText = '0';
         }
       }
@@ -848,7 +832,6 @@
         document.getElementById('all-total-expense').innerText = grandTotal.toLocaleString();
       }
 
-      // 初始化 Tab 按鈕
       itineraryData.forEach((data, index) => {
         const btn = document.createElement('button');
         btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
@@ -857,7 +840,6 @@
         tabsContainer.appendChild(btn);
       });
 
-      // 預設載入 Day 1
       loadDay(0);
     });
   </script>
