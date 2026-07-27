@@ -55,7 +55,7 @@
     }
     .tab-btn.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
 
-    /* 工具與天氣列 */
+    /* 工具、天氣與極光列 */
     .day-tools {
       display: flex;
       flex-direction: column;
@@ -91,7 +91,7 @@
       gap: 6px;
       flex-wrap: wrap;
     }
-    .full-route-btn, .weather-btn, .aurora-btn {
+    .full-route-btn, .weather-btn, .aurora-btn, .cloud-btn {
       background: #0284c7;
       color: white;
       text-decoration: none;
@@ -105,9 +105,11 @@
     }
     .weather-btn { background: #059669; }
     .aurora-btn { background: #6b21a8; }
+    .cloud-btn { background: #475569; }
     .full-route-btn:hover { background: #0369a1; }
     .weather-btn:hover { background: #047857; }
     .aurora-btn:hover { background: #581c87; }
+    .cloud-btn:hover { background: #334155; }
 
     #spot-list { flex: 1; overflow-y: auto; padding: 12px 15px; scroll-behavior: smooth; }
     
@@ -171,7 +173,7 @@
     .alert-text { color: #dc2626; font-weight: bold; }
     .tip-text { color: #2563eb; font-weight: 500; }
 
-    /* 下半部：地圖（使用相對高度 32vh 優化手機檢視） */
+    /* 下半部：地圖 */
     #map { 
       width: 100%; 
       height: 32vh; 
@@ -179,7 +181,7 @@
       border-top: 2px solid #cbd5e1;
     }
 
-    /* 多色彩動態 Marker 風格 */
+    /* Marker 風格 */
     .custom-marker {
       color: white;
       border-radius: 50%;
@@ -204,7 +206,7 @@
   <div id="sidebar">
     <div class="header">
       <h1 id="header-title">🇳🇿 紐西蘭冬季自助全行程</h1>
-      <p id="header-subtitle">點選日期查看當天路線、天氣與極光指數，卡片可單點導航</p>
+      <p id="header-subtitle">點選日期查看當天路線、氣象、KP指數與雲層覆蓋率，卡片可單點導航</p>
     </div>
     <div id="day-tabs"></div>
     
@@ -214,11 +216,12 @@
         <span id="weather-info" class="weather-info">❄️ 氣溫載入中...</span>
       </div>
       <div class="tools-row">
-        <span id="aurora-info" class="aurora-info">🌌 極光指數載入中...</span>
+        <span id="aurora-info" class="aurora-info">🌌 極光 KP 指數與雲層載入中...</span>
         <div class="btn-group">
           <a id="full-route-link" href="#" target="_blank" class="full-route-btn">🗺️ 今日全程導航</a>
           <a id="metservice-link" href="https://www.metservice.com/" target="_blank" class="weather-btn">🌤️ MetService 氣象</a>
-          <a href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" target="_blank" class="aurora-btn">🌌 NOAA 即時極光預報</a>
+          <a href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" target="_blank" class="aurora-btn">🌌 NOAA 即時極光圖</a>
+          <a href="https://www.ventusky.com/?p=-45.0;169.0;6&l=clouds" target="_blank" class="cloud-btn">☁️ Ventusky 即時雲層圖</a>
         </div>
       </div>
     </div>
@@ -237,7 +240,7 @@
           title: "台灣 ✈️ 香港 ✈️ 奧克蘭 ✈️ 皇后鎮",
           driveSummary: "航班轉機移動日",
           weather: "❄️ 皇后鎮約 1°C ~ 10°C",
-          aurora: "🌌 觀測潛力：中 (皇后鎮周邊需遠離鎮中心光害)",
+          aurora: "🌌 預估 KP 指數：2 ~ 3+ ｜ ☁️ 雲層建議：山區易有高雲，需遠離鎮中心光害",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/queenstown",
           spots: [
             { name: "台灣桃園機場 (T1)", category: "航班", lat: 25.0797, lng: 121.2342, desc: "CX495 13:20起飛 -> 15:20抵達香港", drive: "" },
@@ -251,7 +254,7 @@
           title: "Queenstown ➔ Invercargill",
           driveSummary: "約 183 km / 總車程約 2.5 小時",
           weather: "🌤️ 3°C ~ 11°C / 沿海風大",
-          aurora: "🌌 觀測潛力：極高！(Oreti Beach 為紐西蘭南端極佳觀星觀光極光點)",
+          aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Oreti Beach 開闊無光害，若雲量 < 30% 極易以肉眼/相機捕捉",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
             { name: "Quest Queenstown Apartments Remarkables Park", category: "住宿出發", lat: -45.021508, lng: 168.739097, desc: "09:30 辦理退房出發", drive: "" },
@@ -270,7 +273,7 @@
           title: "Bluff 布拉夫一日遊",
           driveSummary: "約 60 km / 總車程約 1 小時",
           weather: "💨 4°C ~ 11°C / 最南端海風強勁",
-          aurora: "🌌 觀測潛力：極高！(Stirling Point 一帶無南方光害，非常利於拍攝)",
+          aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Stirling Point 正對南方無遮蔽，注意海邊低雲變化",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
             { name: "554 Moana Court Motel", category: "住宿出發", lat: -46.400589, lng: 168.375122, desc: "09:30 出發前往 Bluff", drive: "" },
@@ -289,7 +292,7 @@
           title: "Riverton 寶石海灘一日遊",
           driveSummary: "約 80 km / 總車程約 1.2 小時",
           weather: "🌊 3°C ~ 10°C / 海邊體感溫度較低",
-          aurora: "🌌 觀測潛力：高 (Gemstone Beach 海面開闊，無遮蔽物)",
+          aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：Gemstone Beach 海面廣闊，夜間雲量少於 40% 可安排蹲點",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
             { name: "554 Moana Court Motel", category: "住宿出發", lat: -46.400589, lng: 168.375122, desc: "09:30 出發前往 Riverton", drive: "" },
@@ -306,7 +309,7 @@
           title: "Invercargill 市區巡禮與百貨補給",
           driveSummary: "市區移動約 15 km",
           weather: "🌤️ 3°C ~ 11°C / 適合室內採買",
-          aurora: "🌌 觀測潛力：高 (若夜間天晴可至 Oreti Beach 追光)",
+          aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：夜間若無積雲，可由市區驅車 15 分鐘至 Oreti Beach 追光",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
             { name: "554 Moana Court Motel", category: "住宿出發", lat: -46.400589, lng: 168.375122, desc: "出發進行市區特色景點與百貨巡禮", drive: "" },
@@ -324,7 +327,7 @@
           title: "Invercargill ➔ Dunedin (景點補給日)",
           driveSummary: "約 255 km / 總車程約 3.5 小時",
           weather: "🌤️ Dunedin 約 4°C ~ 10°C",
-          aurora: "🌌 觀測潛力：高 (Saint Kilda Beach / Blackhead 為 Dunedin 熱門極光點)",
+          aurora: "🌌 預估 KP 指數：3 ~ 5（高）｜ ☁️ 雲層建議：Saint Kilda 海灘雲量若低於 20%，可拍到海面極光倒影",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
             { name: "554 Moana Court Motel", category: "住宿出發", lat: -46.400589, lng: 168.375122, desc: "辦理退房，準備前往 Dunedin", drive: "" },
@@ -351,7 +354,7 @@
           title: "Dunedin 步道與歷史建築巡禮",
           driveSummary: "市區周邊移動約 25 km",
           weather: "☁️ 4°C ~ 10°C",
-          aurora: "🌌 觀測潛力：中 (Signal Hill Lookout 可俯瞰市區夜景與南方天空)",
+          aurora: "🌌 預估 KP 指數：2 ~ 4（中）｜ ☁️ 雲層建議：Signal Hill 頂端視野開闊，關注夜間中層雲走向",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
             { name: "ASURE Adrian Motel", category: "住宿出發", lat: -45.903812, lng: 170.511212, desc: "09:30 出發展開 Dunedin 景點巡禮", drive: "" },
@@ -374,7 +377,7 @@
           title: "Dunedin ➔ 奧塔哥半島 (生態與美食)",
           driveSummary: "約 55 km / 總車程約 1.2 小時",
           weather: "💨 3°C ~ 10°C / 半島海風強勁",
-          aurora: "🌌 觀測潛力：高 (Hoopers Inlet 與 Allans Beach 無光害，極適合拍照)",
+          aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Hoopers Inlet 完全無光害，若天晴為全紐西蘭最佳極光倒影拍攝地",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
             { name: "ASURE Adrian Motel", category: "住宿出發", lat: -45.903812, lng: 170.511212, desc: "出發前往奧塔哥半島", drive: "" },
@@ -392,7 +395,7 @@
           title: "Dunedin ➔ 港口北岸 (Aramoana)",
           driveSummary: "約 65 km / 總車程約 1.3 小時",
           weather: "🌊 4°C ~ 10°C / 海邊風勁",
-          aurora: "🌌 觀測潛力：高 (Aramoana Spit Beach 擁有絕佳南方地平線視野)",
+          aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：Spit Beach 擁有北方與南方無遮蔽海平線，需觀察低層海霧",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
             { name: "ASURE Adrian Motel", category: "住宿出發", lat: -45.903812, lng: 170.511212, desc: "出發探索 Dunedin 港口北岸景點", drive: "" },
@@ -412,7 +415,7 @@
           title: "Dunedin ➔ Oamaru (沿海移動日)",
           driveSummary: "約 120 km / 總車程約 2 小時",
           weather: "🌤️ 3°C ~ 11°C",
-          aurora: "🌌 觀測潛力：高 (Bushy Beach 景觀台與 Oamaru Lookout 為熱門拍照點)",
+          aurora: "🌌 預估 KP 指數：3 ~ 5（高）｜ ☁️ 雲層建議：Bushy Beach 保護區與 Oamaru Lookout 雲量少於 30% 時極佳",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/oamaru",
           spots: [
             { name: "ASURE Adrian Motel", category: "住宿出發", lat: -45.903812, lng: 170.511212, desc: "辦理退房，沿 1 號公路北上前往 Oamaru", drive: "" },
@@ -434,7 +437,7 @@
           title: "Oamaru 歷史古鎮漫遊",
           driveSummary: "市區移動約 10 km",
           weather: "🏛️ 3°C ~ 11°C",
-          aurora: "🌌 觀測潛力：中 (鎮上有些許光害，可驅車前往港口邊觀測)",
+          aurora: "🌌 預估 KP 指數：2 ~ 3+（中）｜ ☁️ 雲層建議：鎮上有些許光害，若雲層 < 20% 可至港口防波堤拍攝",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/oamaru",
           spots: [
             { name: "AAA Thames Court Motel", category: "住宿出發", lat: -45.090812, lng: 170.972512, desc: "漫遊 Oamaru 市區歷史建築與文化景點", drive: "" },
@@ -450,7 +453,7 @@
           title: "Oamaru ➔ Lake Tekapo",
           driveSummary: "約 173 km / 總車程約 2.5 小時",
           weather: "🏔️ -1°C ~ 8°C / 進入內陸山區，夜間寒冷",
-          aurora: "🌌 觀測潛力：極高！(國際暗空保護區，無光害環境首選)",
+          aurora: "🌌 預估 KP 指數：3 ~ 6（極高！）｜ ☁️ 雲層建議：暗空保護區零光害，只需確認無低雲即可於湖畔肉眼看極光",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
           spots: [
             { name: "AAA Thames Court Motel", category: "住宿出發", lat: -45.090812, lng: 170.972512, desc: "退房準備前往蒂卡波湖", drive: "" },
@@ -462,7 +465,7 @@
           title: "Lake Tekapo 周邊探索",
           driveSummary: "約 35 km / 總車程約 40 分鐘",
           weather: "❄️ -2°C ~ 7°C",
-          aurora: "🌌 觀測潛力：極高！(約翰山頂與 Alexandrina 湖畔極易出大片)",
+          aurora: "🌌 預估 KP 指數：3 ~ 6（極高！）｜ ☁️ 雲層建議：約翰山頂與 Alexandrina 湖無高山遮蔽，觀察 Ventusky 中雲圖",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
           spots: [
             { name: "Notre Maison Du Lac - Lake Tekapo", category: "住宿出發", lat: -44.002812, lng: 170.479512, desc: "出發探索 Lake Tekapo 周邊", drive: "" },
@@ -476,7 +479,7 @@
           title: "Lake Tekapo 湖畔深度放鬆",
           driveSummary: "步行為主 / 漫遊體驗",
           weather: "🌌 -2°C ~ 7°C",
-          aurora: "🌌 觀測潛力：極高！(湖畔暗空觀星與追極光黃金時段)",
+          aurora: "🌌 預估 KP 指數：3 ~ 5（極高！）｜ ☁️ 雲層建議：湖畔夜間觀星黃金期，請於出發前對照即時雲層地圖",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
           spots: [
             { name: "Notre Maison Du Lac - Lake Tekapo", category: "住宿出發", lat: -44.002812, lng: 170.479512, desc: "蒂卡波湖畔自主放鬆、觀星與溫泉體驗", drive: "" },
@@ -488,7 +491,7 @@
           title: "Lake Tekapo ➔ Queenstown",
           driveSummary: "約 250 km / 總車程約 3 小時",
           weather: "🏔️ 0°C ~ 9°C / Lindis Pass 鞍部留意道路冰雪",
-          aurora: "🌌 觀測潛力：中高 (皇后鎮郊區如 Coronet Peak 腳下遠離光害處)",
+          aurora: "🌌 預估 KP 指數：2 ~ 4（中高）｜ ☁️ 雲層建議：皇后鎮郊區如 Coronet Peak 腳下可避開市區光害與盆地積雲",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/queenstown",
           spots: [
             { name: "Notre Maison Du Lac - Lake Tekapo", category: "住宿出發", lat: -44.002812, lng: 170.479512, desc: "辦理退房，返程返回皇后鎮", drive: "" },
@@ -501,7 +504,7 @@
           title: "Queenstown ✈️ Auckland ✈️ 台北",
           driveSummary: "機場移動與返程航班",
           weather: "🛫 奧克蘭約 8°C ~ 14°C / 皇后鎮約 1°C ~ 9°C",
-          aurora: "🌌 觀測潛力：返程航班日",
+          aurora: "🌌 預估 KP 指數：返程航班日",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/auckland",
           spots: [
             { name: "The Whistler Holiday Apartments", category: "住宿出發", lat: -45.028812, lng: 168.663212, desc: "退房前往皇后鎮機場", drive: "" },
@@ -547,7 +550,7 @@
       function loadDay(dayIndex) {
         const dayData = itineraryData[dayIndex];
 
-        // 1. 動態更新 Header 標題、車程預估、天氣概況與極光觀測潛力
+        // 1. 動態更新 Header 標題、車程預估、天氣概況與 KP/雲層預估
         headerTitle.innerText = `🇳🇿 ${dayData.day}｜${dayData.title}`;
         daySummary.innerText = `🚗 今日預估：${dayData.driveSummary}`;
         weatherInfo.innerText = dayData.weather;
