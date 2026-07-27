@@ -77,7 +77,8 @@
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .aurora-info {
       color: #7e22ce;
@@ -206,14 +207,14 @@
   <div id="sidebar">
     <div class="header">
       <h1 id="header-title">🇳🇿 紐西蘭冬季自助全行程</h1>
-      <p id="header-subtitle">點選日期查看當天路線、氣象、KP指數與雲層覆蓋率，卡片可單點導航</p>
+      <p id="header-subtitle">點選日期查看當天路線、即時天氣/預報與 KP 指數，卡片可單點導航</p>
     </div>
     <div id="day-tabs"></div>
     
     <div class="day-tools">
       <div class="tools-row">
         <span id="day-summary">🚗 行車預估載入中...</span>
-        <span id="weather-info" class="weather-info">❄️ 氣溫載入中...</span>
+        <span id="weather-info" class="weather-info">🌤️ 正在取得即時天氣與預報...</span>
       </div>
       <div class="tools-row">
         <span id="aurora-info" class="aurora-info">🌌 極光 KP 指數與雲層載入中...</span>
@@ -239,7 +240,7 @@
           day: "7/30-31",
           title: "台灣 ✈️ 香港 ✈️ 奧克蘭 ✈️ 皇后鎮",
           driveSummary: "航班轉機移動日",
-          weather: "❄️ 皇后鎮約 1°C ~ 10°C",
+          fallbackWeather: "❄️ 歷史均溫：皇后鎮約 1°C ~ 10°C",
           aurora: "🌌 預估 KP 指數：2 ~ 3+ ｜ ☁️ 雲層建議：山區易有高雲，需遠離鎮中心光害",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/queenstown",
           spots: [
@@ -253,7 +254,7 @@
           day: "8/1",
           title: "Queenstown ➔ Invercargill",
           driveSummary: "約 183 km / 總車程約 2.5 小時",
-          weather: "🌤️ 3°C ~ 11°C / 沿海風大",
+          fallbackWeather: "🌤️ 歷史均溫：3°C ~ 11°C / 沿海風大",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Oreti Beach 開闊無光害，若雲量 < 30% 極易以肉眼/相機捕捉",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
@@ -272,7 +273,7 @@
           day: "8/2",
           title: "Bluff 布拉夫一日遊",
           driveSummary: "約 60 km / 總車程約 1 小時",
-          weather: "💨 4°C ~ 11°C / 最南端海風強勁",
+          fallbackWeather: "💨 歷史均溫：4°C ~ 11°C / 最南端海風強勁",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Stirling Point 正對南方無遮蔽，注意海邊低雲變化",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
@@ -291,7 +292,7 @@
           day: "8/3",
           title: "Riverton 寶石海灘一日遊",
           driveSummary: "約 80 km / 總車程約 1.2 小時",
-          weather: "🌊 3°C ~ 10°C / 海邊體感溫度較低",
+          fallbackWeather: "🌊 歷史均溫：3°C ~ 10°C / 海邊體感溫度較低",
           aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：Gemstone Beach 海面廣闊，夜間雲量少於 40% 可安排蹲點",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
@@ -308,7 +309,7 @@
           day: "8/4",
           title: "Invercargill 市區巡禮與百貨補給",
           driveSummary: "市區移動約 15 km",
-          weather: "🌤️ 3°C ~ 11°C / 適合室內採買",
+          fallbackWeather: "🌤️ 歷史均溫：3°C ~ 11°C / 適合室內採買",
           aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：夜間若無積雲，可由市區驅車 15 分鐘至 Oreti Beach 追光",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
           spots: [
@@ -326,7 +327,7 @@
           day: "8/5",
           title: "Invercargill ➔ Dunedin (景點補給日)",
           driveSummary: "約 255 km / 總車程約 3.5 小時",
-          weather: "🌤️ Dunedin 約 4°C ~ 10°C",
+          fallbackWeather: "🌤️ 歷史均溫：Dunedin 約 4°C ~ 10°C",
           aurora: "🌌 預估 KP 指數：3 ~ 5（高）｜ ☁️ 雲層建議：Saint Kilda 海灘雲量若低於 20%，可拍到海面極光倒影",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
@@ -353,7 +354,7 @@
           day: "8/6",
           title: "Dunedin 步道與歷史建築巡禮",
           driveSummary: "市區周邊移動約 25 km",
-          weather: "☁️ 4°C ~ 10°C",
+          fallbackWeather: "☁️ 歷史均溫：4°C ~ 10°C",
           aurora: "🌌 預估 KP 指數：2 ~ 4（中）｜ ☁️ 雲層建議：Signal Hill 頂端視野開闊，關注夜間中層雲走向",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
@@ -376,7 +377,7 @@
           day: "8/7",
           title: "Dunedin ➔ 奧塔哥半島 (生態與美食)",
           driveSummary: "約 55 km / 總車程約 1.2 小時",
-          weather: "💨 3°C ~ 10°C / 半島海風強勁",
+          fallbackWeather: "💨 歷史均溫：3°C ~ 10°C / 半島海風強勁",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Hoopers Inlet 完全無光害，若天晴為全紐西蘭最佳極光倒影拍攝地",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
@@ -394,7 +395,7 @@
           day: "8/8",
           title: "Dunedin ➔ 港口北岸 (Aramoana)",
           driveSummary: "約 65 km / 總車程約 1.3 小時",
-          weather: "🌊 4°C ~ 10°C / 海邊風勁",
+          fallbackWeather: "🌊 歷史均溫：4°C ~ 10°C / 海邊風勁",
           aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：Spit Beach 擁有北方與南方無遮蔽海平線，需觀察低層海霧",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
           spots: [
@@ -414,7 +415,7 @@
           day: "8/9",
           title: "Dunedin ➔ Oamaru (沿海移動日)",
           driveSummary: "約 120 km / 總車程約 2 小時",
-          weather: "🌤️ 3°C ~ 11°C",
+          fallbackWeather: "🌤️ 歷史均溫：3°C ~ 11°C",
           aurora: "🌌 預估 KP 指數：3 ~ 5（高）｜ ☁️ 雲層建議：Bushy Beach 保護區與 Oamaru Lookout 雲量少於 30% 時極佳",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/oamaru",
           spots: [
@@ -436,7 +437,7 @@
           day: "8/10",
           title: "Oamaru 歷史古鎮漫遊",
           driveSummary: "市區移動約 10 km",
-          weather: "🏛️ 3°C ~ 11°C",
+          fallbackWeather: "🏛️ 歷史均溫：3°C ~ 11°C",
           aurora: "🌌 預估 KP 指數：2 ~ 3+（中）｜ ☁️ 雲層建議：鎮上有些許光害，若雲層 < 20% 可至港口防波堤拍攝",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/oamaru",
           spots: [
@@ -452,7 +453,7 @@
           day: "8/11",
           title: "Oamaru ➔ Lake Tekapo",
           driveSummary: "約 173 km / 總車程約 2.5 小時",
-          weather: "🏔️ -1°C ~ 8°C / 進入內陸山區，夜間寒冷",
+          fallbackWeather: "🏔️ 歷史均溫：-1°C ~ 8°C / 進入內陸山區，夜間寒冷",
           aurora: "🌌 預估 KP 指數：3 ~ 6（極高！）｜ ☁️ 雲層建議：暗空保護區零光害，只需確認無低雲即可於湖畔肉眼看極光",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
           spots: [
@@ -464,7 +465,7 @@
           day: "8/12",
           title: "Lake Tekapo 周邊探索",
           driveSummary: "約 35 km / 總車程約 40 分鐘",
-          weather: "❄️ -2°C ~ 7°C",
+          fallbackWeather: "❄️ 歷史均溫：-2°C ~ 7°C",
           aurora: "🌌 預估 KP 指數：3 ~ 6（極高！）｜ ☁️ 雲層建議：約翰山頂與 Alexandrina 湖無高山遮蔽，觀察 Ventusky 中雲圖",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
           spots: [
@@ -478,7 +479,7 @@
           day: "8/13-14",
           title: "Lake Tekapo 湖畔深度放鬆",
           driveSummary: "步行為主 / 漫遊體驗",
-          weather: "🌌 -2°C ~ 7°C",
+          fallbackWeather: "🌌 歷史均溫：-2°C ~ 7°C",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高！）｜ ☁️ 雲層建議：湖畔夜間觀星黃金期，請於出發前對照即時雲層地圖",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
           spots: [
@@ -490,7 +491,7 @@
           day: "8/15-16",
           title: "Lake Tekapo ➔ Queenstown",
           driveSummary: "約 250 km / 總車程約 3 小時",
-          weather: "🏔️ 0°C ~ 9°C / Lindis Pass 鞍部留意道路冰雪",
+          fallbackWeather: "🏔️ 歷史均溫：0°C ~ 9°C / Lindis Pass 鞍部留意道路冰雪",
           aurora: "🌌 預估 KP 指數：2 ~ 4（中高）｜ ☁️ 雲層建議：皇后鎮郊區如 Coronet Peak 腳下可避開市區光害與盆地積雲",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/queenstown",
           spots: [
@@ -503,7 +504,7 @@
           day: "8/17-18",
           title: "Queenstown ✈️ Auckland ✈️ 台北",
           driveSummary: "機場移動與返程航班",
-          weather: "🛫 奧克蘭約 8°C ~ 14°C / 皇后鎮約 1°C ~ 9°C",
+          fallbackWeather: "🛫 歷史均溫：奧克蘭約 8°C ~ 14°C / 皇后鎮約 1°C ~ 9°C",
           aurora: "🌌 預估 KP 指數：返程航班日",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/auckland",
           spots: [
@@ -514,6 +515,46 @@
           ]
         }
       ];
+
+      // 天氣代碼轉換為中文與 Emoji
+      function getWeatherDescription(code) {
+        const weatherMap = {
+          0: "☀️ 晴朗", 1: "🌤️ 多雲時晴", 2: "⛅ 局部多雲", 3: "☁️ 陰天",
+          45: "🌫️ 有霧", 48: "霧霧/霧淞", 51: "🌧️ 輕微細雨", 53: "🌧️ 細雨", 55: "🌧️ 濃細雨",
+          61: "☔ 小雨", 63: "☔ 中雨", 65: "☔ 大雨", 71: "🌨️ 小雪", 73: "🌨️ 中雪", 75: "🌨️ 大雪",
+          80: "🌧️ 陣雨", 81: "🌧️ 強陣雨", 85: "🌨️ 陣雪", 95: "🌩️ 雷雨"
+        };
+        return weatherMap[code] || "🌤️ 多雲";
+      }
+
+      // 非同步抓取目前天氣與明日預報
+      async function fetchLiveWeather(lat, lng, fallbackText) {
+        const weatherElement = document.getElementById('weather-info');
+        weatherElement.innerText = "🌤️ 氣象數據連線中...";
+
+        try {
+          const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`);
+          
+          if (!response.ok) throw new Error("API 請求失敗");
+          
+          const data = await response.json();
+          const current = data.current_weather;
+          const currentText = `${getWeatherDescription(current.weathercode)} ${current.temperature}°C`;
+
+          let tomorrowText = "";
+          if (data.daily && data.daily.temperature_2m_min.length > 1) {
+            const minT = data.daily.temperature_2m_min[1];
+            const maxT = data.daily.temperature_2m_max[1];
+            const pop = data.daily.precipitation_probability_max[1];
+            tomorrowText = ` ｜ 🔮 明日預報：${minT}°C ~ ${maxT}°C (降雨率 ${pop !== null ? pop : 0}%)`;
+          }
+
+          weatherElement.innerHTML = `<span>🌡️ 目前：${currentText}</span><span style="color:#059669;">${tomorrowText}</span>`;
+        } catch (error) {
+          console.warn("無法取得即時天氣，切換至歷史均溫：", error);
+          weatherElement.innerText = fallbackText;
+        }
+      }
 
       // 初始化 Leaflet 地圖
       const map = L.map('map').setView([-45.5, 169.5], 7);
@@ -528,7 +569,6 @@
       const spotListContainer = document.getElementById('spot-list');
       const headerTitle = document.getElementById('header-title');
       const daySummary = document.getElementById('day-summary');
-      const weatherInfo = document.getElementById('weather-info');
       const auroraInfo = document.getElementById('aurora-info');
       const fullRouteLink = document.getElementById('full-route-link');
       const metserviceLink = document.getElementById('metservice-link');
@@ -550,14 +590,19 @@
       function loadDay(dayIndex) {
         const dayData = itineraryData[dayIndex];
 
-        // 1. 動態更新 Header 標題、車程預估、天氣概況與 KP/雲層預估
+        // 1. 動態更新 Header 標題、車程與 KP/雲層預估
         headerTitle.innerText = `🇳🇿 ${dayData.day}｜${dayData.title}`;
         daySummary.innerText = `🚗 今日預估：${dayData.driveSummary}`;
-        weatherInfo.innerText = dayData.weather;
         auroraInfo.innerText = dayData.aurora;
         metserviceLink.href = dayData.metserviceUrl;
 
-        // 2. 高亮頁籤，自動將該頁籤移動到畫面中央
+        // 2. 抓取當天第一點的座標，自動查詢「目前天氣 + 明日預報」
+        if (dayData.spots && dayData.spots.length > 0) {
+          const firstSpot = dayData.spots[0];
+          fetchLiveWeather(firstSpot.lat, firstSpot.lng, dayData.fallbackWeather);
+        }
+
+        // 3. 高亮頁籤
         document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
           const isActive = idx === dayIndex;
           btn.classList.toggle('active', isActive);
@@ -566,7 +611,7 @@
           }
         });
 
-        // 3. 生成「一鍵導航今日全程」網址
+        // 4. 生成「一鍵導航今日全程」網址
         if (dayData.spots.length > 1) {
           const origin = `${dayData.spots[0].lat},${dayData.spots[0].lng}`;
           const destination = `${dayData.spots[dayData.spots.length - 1].lat},${dayData.spots[dayData.spots.length - 1].lng}`;
@@ -591,7 +636,7 @@
         spotListContainer.innerHTML = '';
         const routeLatLngs = [];
 
-        // 4. 繪製景點與地圖 Pins
+        // 5. 繪製景點與地圖 Pins
         dayData.spots.forEach((spot, idx) => {
           const latLng = [spot.lat, spot.lng];
           routeLatLngs.push(latLng);
@@ -652,7 +697,7 @@
           spotListContainer.appendChild(card);
         });
 
-        // 5. 繪製路線軌跡並適應畫框邊界
+        // 6. 繪製路線軌跡並適應畫框邊界
         if (routeLatLngs.length > 1) {
           currentPolyline = L.polyline(routeLatLngs, { color: '#0284c7', weight: 3, opacity: 0.8, dashArray: '6, 8' }).addTo(map);
           map.fitBounds(currentPolyline.getBounds(), { padding: [40, 40] });
