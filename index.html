@@ -16,7 +16,7 @@
       background-color: #f4f6f8; 
     }
     
-    /* 上半部：行程內容區 (佔用剩餘的 75% 空間) */
+    /* 上半部：行程內容區 */
     #sidebar { 
       width: 100%; 
       flex: 1; 
@@ -55,7 +55,7 @@
     }
     .tab-btn.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
 
-    /* 工具、天氣與極光列 */
+    /* 工具、天氣、路況與極光列 */
     .day-tools {
       display: flex;
       flex-direction: column;
@@ -92,7 +92,7 @@
       gap: 6px;
       flex-wrap: wrap;
     }
-    .full-route-btn, .weather-btn, .aurora-btn, .cloud-btn {
+    .full-route-btn, .weather-btn, .aurora-btn, .cloud-btn, .road-btn {
       background: #0284c7;
       color: white;
       text-decoration: none;
@@ -107,10 +107,13 @@
     .weather-btn { background: #059669; }
     .aurora-btn { background: #6b21a8; }
     .cloud-btn { background: #475569; }
+    .road-btn { background: #dc2626; }
+    
     .full-route-btn:hover { background: #0369a1; }
     .weather-btn:hover { background: #047857; }
     .aurora-btn:hover { background: #581c87; }
     .cloud-btn:hover { background: #334155; }
+    .road-btn:hover { background: #b91c1c; }
 
     #spot-list { flex: 1; overflow-y: auto; padding: 12px 15px; scroll-behavior: smooth; }
     
@@ -174,7 +177,7 @@
     .alert-text { color: #dc2626; font-weight: bold; }
     .tip-text { color: #2563eb; font-weight: 500; }
 
-    /* 下半部：地圖（設定為約占螢幕總高度 25%） */
+    /* 下半部：地圖（佔用 25% 空間） */
     #map { 
       width: 100%; 
       height: 25vh; 
@@ -207,7 +210,7 @@
   <div id="sidebar">
     <div class="header">
       <h1 id="header-title">🇳🇿 紐西蘭冬季自助全行程</h1>
-      <p id="header-subtitle">點選日期查看當天路線、即時天氣/預報與 KP 指數，卡片可單點導航</p>
+      <p id="header-subtitle">點選日期查看當天路線、即時氣象、路況風險與 KP 指數，卡片可單點導航</p>
     </div>
     <div id="day-tabs"></div>
     
@@ -220,9 +223,10 @@
         <span id="aurora-info" class="aurora-info">🌌 極光 KP 指數與雲層載入中...</span>
         <div class="btn-group">
           <a id="full-route-link" href="#" target="_blank" class="full-route-btn">🗺️ 今日全程導航</a>
+          <a href="https://www.journeys.nzta.govt.nz/traffic" target="_blank" class="road-btn">🚧 NZTA 即時路況</a>
           <a id="metservice-link" href="https://www.metservice.com/" target="_blank" class="weather-btn">🌤️ MetService 氣象</a>
-          <a href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" target="_blank" class="aurora-btn">🌌 NOAA 即時極光圖</a>
-          <a href="https://www.ventusky.com/?p=-45.0;169.0;6&l=clouds" target="_blank" class="cloud-btn">☁️ Ventusky 即時雲層圖</a>
+          <a href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" target="_blank" class="aurora-btn">🌌 NOAA 極光圖</a>
+          <a href="https://www.ventusky.com/?p=-45.0;169.0;6&l=clouds" target="_blank" class="cloud-btn">☁️ Ventusky 雲層</a>
         </div>
       </div>
     </div>
@@ -239,7 +243,7 @@
         {
           day: "7/30-31",
           title: "台灣 ✈️ 香港 ✈️ 奧克蘭 ✈️ 皇后鎮",
-          driveSummary: "航班轉機移動日",
+          driveSummary: "航班轉機移動日（皇后鎮機場路段通行正常）",
           fallbackWeather: "❄️ 歷史均溫：皇后鎮約 1°C ~ 10°C",
           aurora: "🌌 預估 KP 指數：2 ~ 3+ ｜ ☁️ 雲層建議：山區易有高雲，需遠離鎮中心光害",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/queenstown",
@@ -253,7 +257,7 @@
         {
           day: "8/1",
           title: "Queenstown ➔ Invercargill",
-          driveSummary: "約 183 km / 總車程約 2.5 小時",
+          driveSummary: "約 183 km / 總車程約 2.5 小時 <span class='alert-text'>⚠️ SH6 惡魔梯級沿湖山路清晨易結冰(Black Ice)</span>",
           fallbackWeather: "🌤️ 歷史均溫：3°C ~ 11°C / 沿海風大",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Oreti Beach 開闊無光害，若雲量 < 30% 極易以肉眼/相機捕捉",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
@@ -272,7 +276,7 @@
         {
           day: "8/2",
           title: "Bluff 布拉夫一日遊",
-          driveSummary: "約 60 km / 總車程約 1 小時",
+          driveSummary: "約 60 km / 總車程約 1 小時 <span class='tip-text'>💡 SH1 南端地平，強側風需握緊方向盤</span>",
           fallbackWeather: "💨 歷史均溫：4°C ~ 11°C / 最南端海風強勁",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Stirling Point 正對南方無遮蔽，注意海邊低雲變化",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
@@ -284,14 +288,14 @@
             { name: "布拉夫山瞭望點", category: "景點", lat: -46.611112, lng: 168.341812, desc: "俯瞰 Bluff 全景與海岸線", drive: "車程 5分鐘" },
             { name: "Stirling Point", category: "地標", lat: -46.613312, lng: 168.358212, desc: "一號公路最南端經典地標路牌", drive: "車程 3分鐘" },
             { name: "Foveaux Walkway", category: "步道", lat: -46.614012, lng: 168.351012, desc: "沿海健行步道", drive: "步行/車程 2分鐘" },
-            { name: "Lookout Point", category: "景點", lat: -46.609812, lng: 168.348112, desc: "海景觀景點", drive: "車程 3分鐘" },
+            { name: "Lookout Point", category: "景點", lat: -45.609812, lng: 168.348112, desc: "海景觀景點", drive: "車程 3分鐘" },
             { name: "554 Moana Court Motel", category: "返回住宿", lat: -46.400589, lng: 168.375122, desc: "返回 Motel 休息", drive: "距離約 30km / 車程 25分鐘" }
           ]
         },
         {
           day: "8/3",
           title: "Riverton 寶石海灘一日遊",
-          driveSummary: "約 80 km / 總車程約 1.2 小時",
+          driveSummary: "約 80 km / 總車程約 1.2 小時（SH99 鄉村公路通行順暢）",
           fallbackWeather: "🌊 歷史均溫：3°C ~ 10°C / 海邊體感溫度較低",
           aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：Gemstone Beach 海面廣闊，夜間雲量少於 40% 可安排蹲點",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
@@ -308,7 +312,7 @@
         {
           day: "8/4",
           title: "Invercargill 市區巡禮與百貨補給",
-          driveSummary: "市區移動約 15 km",
+          driveSummary: "市區移動約 15 km（市區主要道路良好）",
           fallbackWeather: "🌤️ 歷史均溫：3°C ~ 11°C / 適合室內採買",
           aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：夜間若無積雲，可由市區驅車 15 分鐘至 Oreti Beach 追光",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/invercargill",
@@ -326,7 +330,7 @@
         {
           day: "8/5",
           title: "Invercargill ➔ Dunedin (景點補給日)",
-          driveSummary: "約 255 km / 總車程約 3.5 小時",
+          driveSummary: "約 255 km / 總車程約 3.5 小時 <span class='tip-text'>💡 SH1 沿海丘陵段注意濃霧及強風</span>",
           fallbackWeather: "🌤️ 歷史均溫：Dunedin 約 4°C ~ 10°C",
           aurora: "🌌 預估 KP 指數：3 ~ 5（高）｜ ☁️ 雲層建議：Saint Kilda 海灘雲量若低於 20%，可拍到海面極光倒影",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
@@ -353,7 +357,7 @@
         {
           day: "8/6",
           title: "Dunedin 步道與歷史建築巡禮",
-          driveSummary: "市區周邊移動約 25 km",
+          driveSummary: "市區周邊移動約 25 km <span class='alert-text'>⚠️ 市區斜坡道路(Baldwin St)極陡，下雨或霜凍請打低速檔</span>",
           fallbackWeather: "☁️ 歷史均溫：4°C ~ 10°C",
           aurora: "🌌 預估 KP 指數：2 ~ 4（中）｜ ☁️ 雲層建議：Signal Hill 頂端視野開闊，關注夜間中層雲走向",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
@@ -376,7 +380,7 @@
         {
           day: "8/7",
           title: "Dunedin ➔ 奧塔哥半島 (生態與美食)",
-          driveSummary: "約 55 km / 總車程約 1.2 小時",
+          driveSummary: "約 55 km / 總車程約 1.2 小時 <span class='tip-text'>💡 Portobello Road 沿海狹窄彎曲，注意路邊無護欄段</span>",
           fallbackWeather: "💨 歷史均溫：3°C ~ 10°C / 半島海風強勁",
           aurora: "🌌 預估 KP 指數：3 ~ 5（極高）｜ ☁️ 雲層建議：Hoopers Inlet 完全無光害，若天晴為全紐西蘭最佳極光倒影拍攝地",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
@@ -394,7 +398,7 @@
         {
           day: "8/8",
           title: "Dunedin ➔ 港口北岸 (Aramoana)",
-          driveSummary: "約 65 km / 總車程約 1.3 小時",
+          driveSummary: "約 65 km / 總車程約 1.3 小時（沿海道路局部濕滑）",
           fallbackWeather: "🌊 歷史均溫：4°C ~ 10°C / 海邊風勁",
           aurora: "🌌 預估 KP 指數：2 ~ 4（高）｜ ☁️ 雲層建議：Spit Beach 擁有北方與南方無遮蔽海平線，需觀察低層海霧",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/dunedin",
@@ -414,7 +418,7 @@
         {
           day: "8/9",
           title: "Dunedin ➔ Oamaru (沿海移動日)",
-          driveSummary: "約 120 km / 總車程約 2 小時",
+          driveSummary: "約 120 km / 總車程約 2 小時 <span class='tip-text'>💡 SH1 主幹道通行順暢，留意清晨局部濃霧</span>",
           fallbackWeather: "🌤️ 歷史均溫：3°C ~ 11°C",
           aurora: "🌌 預估 KP 指數：3 ~ 5（高）｜ ☁️ 雲層建議：Bushy Beach 保護區與 Oamaru Lookout 雲量少於 30% 時極佳",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/oamaru",
@@ -436,7 +440,7 @@
         {
           day: "8/10",
           title: "Oamaru 歷史古鎮漫遊",
-          driveSummary: "市區移動約 10 km",
+          driveSummary: "市區移動約 10 km（平坦好走）",
           fallbackWeather: "🏛️ 歷史均溫：3°C ~ 11°C",
           aurora: "🌌 預估 KP 指數：2 ~ 3+（中）｜ ☁️ 雲層建議：鎮上有些許光害，若雲層 < 20% 可至港口防波堤拍攝",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/oamaru",
@@ -452,7 +456,7 @@
         {
           day: "8/11",
           title: "Oamaru ➔ Lake Tekapo",
-          driveSummary: "約 173 km / 總車程約 2.5 小時",
+          driveSummary: "約 173 km / 總車程約 2.5 小時 <span class='alert-text'>🚨 SH83 & SH8 內陸高山段：暴雪時易預警封閉或限制雪鏈</span>",
           fallbackWeather: "🏔️ 歷史均溫：-1°C ~ 8°C / 進入內陸山區，夜間寒冷",
           aurora: "🌌 預估 KP 指數：3 ~ 6（極高！）｜ ☁️ 雲層建議：暗空保護區零光害，只需確認無低雲即可於湖畔肉眼看極光",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
@@ -464,7 +468,7 @@
         {
           day: "8/12",
           title: "Lake Tekapo 周邊探索",
-          driveSummary: "約 35 km / 總車程約 40 分鐘",
+          driveSummary: "約 35 km / 總車程約 40 分鐘 <span class='alert-text'>⚠️ Mt John 約翰山頂道路極寒易積雪(黑冰高風險)</span>",
           fallbackWeather: "❄️ 歷史均溫：-2°C ~ 7°C",
           aurora: "🌌 預估 KP 指數：3 ~ 6（極高！）｜ ☁️ 雲層建議：約翰山頂與 Alexandrina 湖無高山遮蔽，觀察 Ventusky 中雲圖",
           metserviceUrl: "https://www.metservice.com/rural/regions/cantabrian/locations/lake-tekapo",
@@ -490,7 +494,7 @@
         {
           day: "8/15-16",
           title: "Lake Tekapo ➔ Queenstown",
-          driveSummary: "約 250 km / 總車程約 3 小時",
+          driveSummary: "約 250 km / 總車程約 3 小時 <span class='alert-text'>🚨 SH8 Lindis Pass 鞍部：冬季極度危險！經常因暴雪/結冰封路</span>",
           fallbackWeather: "🏔️ 歷史均溫：0°C ~ 9°C / Lindis Pass 鞍部留意道路冰雪",
           aurora: "🌌 預估 KP 指數：2 ~ 4（中高）｜ ☁️ 雲層建議：皇后鎮郊區如 Coronet Peak 腳下可避開市區光害與盆地積雲",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/queenstown",
@@ -503,7 +507,7 @@
         {
           day: "8/17-18",
           title: "Queenstown ✈️ Auckland ✈️ 台北",
-          driveSummary: "機場移動與返程航班",
+          driveSummary: "機場移動與返程航班（請預留充足時間至機場）",
           fallbackWeather: "🛫 歷史均溫：奧克蘭約 8°C ~ 14°C / 皇后鎮約 1°C ~ 9°C",
           aurora: "🌌 預估 KP 指數：返程航班日",
           metserviceUrl: "https://www.metservice.com/towns-cities/locations/auckland",
@@ -592,7 +596,7 @@
 
         // 1. 動態更新 Header 標題、車程與 KP/雲層預估
         headerTitle.innerText = `🇳🇿 ${dayData.day}｜${dayData.title}`;
-        daySummary.innerText = `🚗 今日預估：${dayData.driveSummary}`;
+        daySummary.innerHTML = `🚗 今日預估：${dayData.driveSummary}`;
         auroraInfo.innerText = dayData.aurora;
         metserviceLink.href = dayData.metserviceUrl;
 
